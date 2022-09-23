@@ -3,6 +3,7 @@ import { Form, FormBookLabel, FormBookInput, SubmitBtn } from './FormStyled';
 export class FormContainer extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
   }
 
   render() {
