@@ -78,7 +78,11 @@ export class PhoneBook extends React.Component {
   };
 
   checkNameInList = contacts => {
-    if (contacts.find(contact => contact.name === this.state.name)) {
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === this.state.name.toLowerCase()
+      )
+    ) {
       alert(`${this.state.name} is already in contacts.`);
       return;
     }
