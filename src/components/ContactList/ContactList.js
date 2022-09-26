@@ -1,19 +1,18 @@
 import { ContactList } from './ContactListStyled';
+import { ContactListItem } from 'components/ContactListItem/ContactListItem';
 export const ContactListContainer = ({
-  filter,
-  onFilterArray,
-  contacts,
-  renderOneItem,
+  handleClickDeleteBtn,
+  arrayOfContacts,
 }) => {
   return (
     <ContactList>
-      {filter !== ''
-        ? onFilterArray(contacts).map(contact => {
-            return renderOneItem(contact);
-          })
-        : contacts.map(contact => {
-            return renderOneItem(contact);
-          })}
+      {arrayOfContacts().map(contact => (
+        <ContactListItem
+          key={contact.id}
+          handleClickDeleteBtn={handleClickDeleteBtn}
+          contact={contact}
+        ></ContactListItem>
+      ))}
     </ContactList>
   );
 };

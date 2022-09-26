@@ -4,14 +4,7 @@ import { Box } from 'components/Box/Box';
 import { FormContainer } from 'components/Form/Form';
 import { SearchContainer } from 'components/Filter/Filter';
 import { ContactListContainer } from 'components/ContactList/ContactList';
-import {
-  FormTitle,
-  ContactTitle,
-  ContactItem,
-  ContactText,
-  SearchTitle,
-  RemoveBtn,
-} from './PhoneBooksStyled';
+import { FormTitle, ContactTitle, SearchTitle } from './PhoneBooksStyled';
 export class PhoneBook extends React.Component {
   state = {
     contacts: [
@@ -44,23 +37,6 @@ export class PhoneBook extends React.Component {
       const lowerCaseFilter = this.state.filter.toLowerCase();
       return lowerCaseName.includes(lowerCaseFilter);
     });
-  };
-
-  renderOneItem = contact => {
-    return (
-      <ContactItem key={contact.id}>
-        <ContactText>
-          {contact.name}: {contact.number}
-        </ContactText>
-        <RemoveBtn
-          id={contact.id}
-          type="button"
-          onClick={this.handleClickDeleteBtn}
-        >
-          Delete
-        </RemoveBtn>
-      </ContactItem>
-    );
   };
 
   handleClickDeleteBtn = e => {
@@ -101,6 +77,13 @@ export class PhoneBook extends React.Component {
     });
   };
 
+  createArrayOfContacts = () => {
+    if (this.state.filter !== '') {
+      return this.onFilterArray(this.state.contacts).map(contact => contact);
+    }
+    return this.state.contacts;
+  };
+
   render() {
     return (
       <Box>
@@ -117,10 +100,8 @@ export class PhoneBook extends React.Component {
             handleSearch={this.handleSearch}
           />
           <ContactListContainer
-            filter={this.state.filter}
-            onFilterArray={this.onFilterArray}
-            contacts={this.state.contacts}
-            renderOneItem={this.renderOneItem}
+            arrayOfContacts={this.createArrayOfContacts}
+            handleClickDeleteBtn={this.handleClickDeleteBtn}
           />
         </Box>
       </Box>
