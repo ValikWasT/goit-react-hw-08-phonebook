@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, FormBookLabel, FormBookInput, SubmitBtn } from './FormStyled';
 export class FormContainer extends React.Component {
   constructor(props) {
@@ -55,3 +56,8 @@ export class FormContainer extends React.Component {
     );
   }
 }
+
+FormContainer.propTypes = {
+  handleClickOnForm: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};

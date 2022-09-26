@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ContactList } from './ContactListStyled';
 import { ContactListItem } from 'components/ContactListItem/ContactListItem';
 export const ContactListContainer = ({
@@ -15,4 +16,9 @@ export const ContactListContainer = ({
       ))}
     </ContactList>
   );
+};
+
+ContactListContainer.propTypes = {
+  handleClickDeleteBtn: PropTypes.func.isRequired,
+  arrayOfContacts: PropTypes.func.isRequired,
 };

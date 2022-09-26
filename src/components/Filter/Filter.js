@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { SearchInput, SearchInputContainer } from './FilterStyled';
 export const SearchContainer = ({ filter, handleSearch }) => {
   return (
@@ -9,4 +10,9 @@ export const SearchContainer = ({ filter, handleSearch }) => {
       ></SearchInput>
     </SearchInputContainer>
   );
+};
+
+SearchContainer.propTypes = {
+  filter: PropTypes.string.isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };
