@@ -20,8 +20,6 @@ export class PhoneBook extends React.Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    name: '',
-    number: '',
     filter: '',
   };
   handleSubmit = e => {
@@ -29,12 +27,11 @@ export class PhoneBook extends React.Component {
     this.checkNameInList(this.state.contacts);
   };
 
-  handleNameChange = e => {
-    this.setState({ name: e.currentTarget.value });
-  };
-
-  handleNumberChange = e => {
-    this.setState({ number: e.currentTarget.value });
+  handleClickOnForm = (name, number) => {
+    this.setState(prevState => ({
+      name: (prevState.name = name),
+      number: (prevState.number = number),
+    }));
   };
 
   handleSearch = e => {
@@ -109,11 +106,8 @@ export class PhoneBook extends React.Component {
       <Box>
         <FormTitle>Phonebook</FormTitle>
         <FormContainer
-          name={this.state.name}
-          number={this.state.number}
           handleSubmit={this.handleSubmit}
-          handleNameChange={this.handleNameChange}
-          handleNumberChange={this.handleNumberChange}
+          handleClickOnForm={this.handleClickOnForm}
         />
         <Box>
           <ContactTitle>Contacts</ContactTitle>
