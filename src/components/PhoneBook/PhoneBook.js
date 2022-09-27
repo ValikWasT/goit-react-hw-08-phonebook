@@ -15,17 +15,6 @@ export class PhoneBook extends React.Component {
     ],
     filter: '',
   };
-  handleSubmit = e => {
-    e.preventDefault();
-    this.checkNameInList(this.state.contacts);
-  };
-
-  handleClickOnForm = (name, number) => {
-    this.setState(prevState => ({
-      name: (prevState.name = name),
-      number: (prevState.number = number),
-    }));
-  };
 
   handleSearch = e => {
     this.setState({ filter: e.currentTarget.value });
@@ -50,30 +39,18 @@ export class PhoneBook extends React.Component {
     });
   };
 
-  checkNameInList = contacts => {
-    if (
-      contacts.find(
-        contact => contact.name.toLowerCase() === this.state.name.toLowerCase()
-      )
-    ) {
-      alert(`${this.state.name} is already in contacts.`);
-      return;
-    }
+  addNewContact = (contactName, contactNumber) => {
     this.setState({
       contacts: [
         ...this.state.contacts,
         ...[
           {
-            name: this.state.name,
+            name: contactName,
             id: nanoid(),
-            number: this.state.number,
+            number: contactNumber,
           },
         ],
       ],
-    });
-    this.setState({
-      name: '',
-      number: '',
     });
   };
 
@@ -89,8 +66,8 @@ export class PhoneBook extends React.Component {
       <Box>
         <FormTitle>Phonebook</FormTitle>
         <FormContainer
-          handleSubmit={this.handleSubmit}
-          handleClickOnForm={this.handleClickOnForm}
+          contacts={this.state.contacts}
+          addNewContact={this.addNewContact}
         />
         <Box>
           <ContactTitle>Contacts</ContactTitle>

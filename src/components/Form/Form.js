@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, FormBookLabel, FormBookInput, SubmitBtn } from './FormStyled';
 export class FormContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
-
   state = { name: '', number: '' };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.checkNameInList(this.props.contacts);
+  };
 
   handleNameChange = e => {
     this.setState({ name: e.currentTarget.value });
@@ -17,14 +17,25 @@ export class FormContainer extends React.Component {
     this.setState({ number: e.currentTarget.value });
   };
 
-  addValuesToMainState = () => {
-    this.props.handleClickOnForm(this.state.name, this.state.number);
+  checkNameInList = contacts => {
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === this.state.name.toLowerCase()
+      )
+    ) {
+      alert(`${this.state.name} is already in contacts.`);
+      return;
+    }
+    this.props.addNewContact(this.state.name, this.state.number);
+    this.setState({
+      name: '',
+      number: '',
+    });
   };
 
   render() {
-    const { handleSubmit } = this.props;
     return (
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={this.handleSubmit}>
         <FormBookLabel>
           Name
           <FormBookInput
@@ -49,15 +60,19 @@ export class FormContainer extends React.Component {
             required
           />
         </FormBookLabel>
-        <SubmitBtn type="submit" onClick={this.addValuesToMainState}>
-          Add contact
-        </SubmitBtn>
+        <SubmitBtn type="submit">Add contact</SubmitBtn>
       </Form>
     );
   }
 }
 
 FormContainer.propTypes = {
-  handleClickOnForm: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  addNewContact: PropTypes.func.isRequired,
 };
