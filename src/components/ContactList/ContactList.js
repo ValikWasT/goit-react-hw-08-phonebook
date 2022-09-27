@@ -7,7 +7,7 @@ export const ContactListContainer = ({
 }) => {
   return (
     <ContactList>
-      {arrayOfContacts().map(contact => (
+      {arrayOfContacts.map(contact => (
         <ContactListItem
           key={contact.id}
           handleClickDeleteBtn={handleClickDeleteBtn}
@@ -20,5 +20,11 @@ export const ContactListContainer = ({
 
 ContactListContainer.propTypes = {
   handleClickDeleteBtn: PropTypes.func.isRequired,
-  arrayOfContacts: PropTypes.func.isRequired,
+  arrayOfContacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
 };

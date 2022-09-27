@@ -29,13 +29,10 @@ export class PhoneBook extends React.Component {
   };
 
   handleClickDeleteBtn = e => {
-    const { contacts } = this.state;
-    const contactToDelete = contacts.find(
-      contact => contact.id === e.target.id
-    );
-    contacts.splice(contacts.indexOf(contactToDelete), 1);
     this.setState({
-      contacts: contacts,
+      contacts: this.state.contacts.filter(
+        contact => contact.id !== e.target.id
+      ),
     });
   };
 
@@ -77,7 +74,7 @@ export class PhoneBook extends React.Component {
             handleSearch={this.handleSearch}
           />
           <ContactListContainer
-            arrayOfContacts={this.createArrayOfContacts}
+            arrayOfContacts={this.createArrayOfContacts()}
             handleClickDeleteBtn={this.handleClickDeleteBtn}
           />
         </Box>
