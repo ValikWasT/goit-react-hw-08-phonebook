@@ -1,92 +1,81 @@
 import React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { nanoid } from 'nanoid';
 import { Box } from 'components/Box/Box';
 import { FormContainer } from 'components/Form/Form';
 import { SearchContainer } from 'components/Filter/Filter';
 import { ContactListContainer } from 'components/ContactList/ContactList';
 import { FormTitle, ContactTitle, SearchTitle } from './PhoneBooksStyled';
-export class PhoneBook extends React.Component {
-  state = {
-    contacts: [],
-    filter: '',
-  };
+export const PhoneBook = () => {
+  const [contacts, setContacts] = useState([]);
+  const [filter, setFilter] = useState('');
 
-  componentDidMount() {
+  const disabledFirstRender = useRef(false);
+
+  useEffect(() => {
     const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
     if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
+      setContacts(parsedContacts);
     }
-  }
+  }, []);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  useEffect(() => {
+    if (!disabledFirstRender.current) {
+      disabledFirstRender.current = true;
+      return;
     }
-  }
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
-  handleSearch = e => {
-    this.setState({ filter: e.currentTarget.value });
+  const handleSearch = e => {
+    setFilter(e.currentTarget.value);
   };
 
-  onFilterArray = array => {
+  const onFilterArray = array => {
     return array.filter(contact => {
       const lowerCaseName = contact.name.toLowerCase();
-      const lowerCaseFilter = this.state.filter.toLowerCase();
+      const lowerCaseFilter = filter.toLowerCase();
       return lowerCaseName.includes(lowerCaseFilter);
     });
   };
 
-  handleClickDeleteBtn = e => {
-    this.setState({
-      contacts: this.state.contacts.filter(
-        contact => contact.id !== e.target.id
-      ),
-    });
+  const handleClickDeleteBtn = e => {
+    setContacts(contacts.filter(contact => contact.id !== e.target.id));
   };
 
-  addNewContact = (contactName, contactNumber) => {
-    this.setState({
-      contacts: [
-        ...this.state.contacts,
-        ...[
-          {
-            name: contactName,
-            id: nanoid(),
-            number: contactNumber,
-          },
-        ],
+  const addNewContact = (contactName, contactNumber) => {
+    setContacts([
+      ...contacts,
+      ...[
+        {
+          name: contactName,
+          id: nanoid(),
+          number: contactNumber,
+        },
       ],
-    });
+    ]);
   };
 
-  createArrayOfContacts = () => {
-    if (this.state.filter !== '') {
-      return this.onFilterArray(this.state.contacts).map(contact => contact);
+  const createArrayOfContacts = () => {
+    if (filter !== '') {
+      return onFilterArray(contacts).map(contact => contact);
     }
-    return this.state.contacts;
+    return contacts;
   };
 
-  render() {
-    return (
+  return (
+    <Box>
+      <FormTitle>Phonebook</FormTitle>
+      <FormContainer contacts={contacts} addNewContact={addNewContact} />
       <Box>
-        <FormTitle>Phonebook</FormTitle>
-        <FormContainer
-          contacts={this.state.contacts}
-          addNewContact={this.addNewContact}
+        <ContactTitle>Contacts</ContactTitle>
+        <SearchTitle>Find contacts by name</SearchTitle>
+        <SearchContainer filter={filter} handleSearch={handleSearch} />
+        <ContactListContainer
+          arrayOfContacts={createArrayOfContacts()}
+          handleClickDeleteBtn={handleClickDeleteBtn}
         />
-        <Box>
-          <ContactTitle>Contacts</ContactTitle>
-          <SearchTitle>Find contacts by name</SearchTitle>
-          <SearchContainer
-            filter={this.state.filter}
-            handleSearch={this.handleSearch}
-          />
-          <ContactListContainer
-            arrayOfContacts={this.createArrayOfContacts()}
-            handleClickDeleteBtn={this.handleClickDeleteBtn}
-          />
-        </Box>
       </Box>
-    );
-  }
-}
+    </Box>
+  );
+};
