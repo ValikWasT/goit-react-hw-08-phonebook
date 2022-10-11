@@ -1,5 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterValue } from 'redux/filterSlice';
+import { getFilterValue } from 'redux/selectors';
 import { nanoid } from 'nanoid';
 import { Box } from 'components/Box/Box';
 import { FormContainer } from 'components/Form/Form';
@@ -8,8 +11,9 @@ import { ContactListContainer } from 'components/ContactList/ContactList';
 import { FormTitle, ContactTitle, SearchTitle } from './PhoneBooksStyled';
 export const PhoneBook = () => {
   const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
-
+  // const [filter, setFilter] = useState('');
+  const dispatch = useDispatch();
+  const filter = useSelector(getFilterValue);
   const disabledFirstRender = useRef(false);
 
   useEffect(() => {
@@ -28,7 +32,8 @@ export const PhoneBook = () => {
   }, [contacts]);
 
   const handleSearch = e => {
-    setFilter(e.currentTarget.value);
+    // setFilter(e.currentTarget.value);
+    dispatch(setFilterValue(e.currentTarget.value));
   };
 
   const onFilterArray = array => {
@@ -70,7 +75,7 @@ export const PhoneBook = () => {
       <Box>
         <ContactTitle>Contacts</ContactTitle>
         <SearchTitle>Find contacts by name</SearchTitle>
-        <SearchContainer filter={filter} handleSearch={handleSearch} />
+        <SearchContainer handleSearch={handleSearch} />
         <ContactListContainer
           arrayOfContacts={createArrayOfContacts()}
           handleClickDeleteBtn={handleClickDeleteBtn}

@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
+import { getFilterValue } from 'redux/selectors';
+import { useSelector } from 'react-redux';
 import { SearchInput, SearchInputContainer } from './FilterStyled';
-export const SearchContainer = ({ filter, handleSearch }) => {
+export const SearchContainer = ({ handleSearch }) => {
+  const filter = useSelector(getFilterValue);
   return (
     <SearchInputContainer>
       <SearchInput
@@ -13,6 +16,6 @@ export const SearchContainer = ({ filter, handleSearch }) => {
 };
 
 SearchContainer.propTypes = {
-  filter: PropTypes.string.isRequired,
+  // filter: PropTypes.string.isRequired,
   handleSearch: PropTypes.func.isRequired,
 };
