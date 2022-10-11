@@ -16,6 +16,5 @@ export const SearchContainer = ({ handleSearch }) => {
 };
 
 SearchContainer.propTypes = {
-  // filter: PropTypes.string.isRequired,
   handleSearch: PropTypes.func.isRequired,
 };
