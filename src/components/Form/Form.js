@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { getContacts } from 'redux/selectors';
 import { Form, FormBookLabel, FormBookInput, SubmitBtn } from './FormStyled';
-export const FormContainer = ({ contacts, addNewContact }) => {
+import { useSelector } from 'react-redux';
+export const FormContainer = ({ addNewContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -129,12 +132,12 @@ export const FormContainer = ({ contacts, addNewContact }) => {
 // }
 
 FormContainer.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  // contacts: PropTypes.arrayOf(
+  //   PropTypes.exact({
+  //     id: PropTypes.string.isRequired,
+  //     name: PropTypes.string.isRequired,
+  //     number: PropTypes.string.isRequired,
+  //   }).isRequired
+  // ).isRequired,
   addNewContact: PropTypes.func.isRequired,
 };

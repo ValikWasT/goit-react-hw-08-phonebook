@@ -2,34 +2,36 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterValue } from 'redux/filterSlice';
-import { getFilterValue } from 'redux/selectors';
+import { getFilterValue, getContacts } from 'redux/selectors';
 import { nanoid } from 'nanoid';
 import { Box } from 'components/Box/Box';
 import { FormContainer } from 'components/Form/Form';
 import { SearchContainer } from 'components/Filter/Filter';
 import { ContactListContainer } from 'components/ContactList/ContactList';
 import { FormTitle, ContactTitle, SearchTitle } from './PhoneBooksStyled';
+import { addNewContact, removeContact } from 'redux/contactsSlice';
 export const PhoneBook = () => {
-  const [contacts, setContacts] = useState([]);
+  // const [contacts, setContacts] = useState([]);
   // const [filter, setFilter] = useState('');
   const dispatch = useDispatch();
   const filter = useSelector(getFilterValue);
-  const disabledFirstRender = useRef(false);
+  const contacts = useSelector(getContacts);
+  // const disabledFirstRender = useRef(false);
 
-  useEffect(() => {
-    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+  //   if (parsedContacts) {
+  //     setContacts(parsedContacts);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (!disabledFirstRender.current) {
-      disabledFirstRender.current = true;
-      return;
-    }
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   if (!disabledFirstRender.current) {
+  //     disabledFirstRender.current = true;
+  //     return;
+  //   }
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
 
   const handleSearch = e => {
     // setFilter(e.currentTarget.value);
@@ -45,20 +47,29 @@ export const PhoneBook = () => {
   };
 
   const handleClickDeleteBtn = e => {
-    setContacts(contacts.filter(contact => contact.id !== e.target.id));
+    // setContacts(contacts.filter(contact => contact.id !== e.target.id));
+    dispatch(removeContact(e.target.id));
   };
 
-  const addNewContact = (contactName, contactNumber) => {
-    setContacts([
-      ...contacts,
-      ...[
-        {
-          name: contactName,
-          id: nanoid(),
-          number: contactNumber,
-        },
-      ],
-    ]);
+  const addNewContacts = (contactName, contactNumber) => {
+    // console.log(contacts);
+    // setContacts([
+    //   ...contacts,
+    //   ...[
+    //     {
+    //       name: contactName,
+    //       id: nanoid(),
+    //       number: contactNumber,
+    //     },
+    //   ],
+    // ]);
+    dispatch(
+      addNewContact({
+        name: contactName,
+        id: nanoid(),
+        number: contactNumber,
+      })
+    );
   };
 
   const createArrayOfContacts = () => {
@@ -71,7 +82,7 @@ export const PhoneBook = () => {
   return (
     <Box>
       <FormTitle>Phonebook</FormTitle>
-      <FormContainer contacts={contacts} addNewContact={addNewContact} />
+      <FormContainer addNewContact={addNewContacts} />
       <Box>
         <ContactTitle>Contacts</ContactTitle>
         <SearchTitle>Find contacts by name</SearchTitle>
