@@ -1,16 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ContactList } from './ContactListStyled';
 import { ContactListItem } from 'components/ContactListItem/ContactListItem';
-import { removeContact } from 'redux/contactsSlice';
+
 import { getFilterValue, getContacts } from 'redux/selectors';
 export const ContactListContainer = () => {
-  const dispatch = useDispatch();
   const filter = useSelector(getFilterValue);
   const contacts = useSelector(getContacts);
-
-  const handleClickDeleteBtn = e => {
-    dispatch(removeContact(e.target.id));
-  };
 
   const createArrayOfContacts = () => {
     if (filter !== '') {
@@ -30,11 +25,7 @@ export const ContactListContainer = () => {
   return (
     <ContactList>
       {createArrayOfContacts().map(contact => (
-        <ContactListItem
-          key={contact.id}
-          handleClickDeleteBtn={handleClickDeleteBtn}
-          contact={contact}
-        ></ContactListItem>
+        <ContactListItem key={contact.id} contact={contact}></ContactListItem>
       ))}
     </ContactList>
   );
