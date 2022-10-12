@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types';
 import { getFilterValue } from 'redux/selectors';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilterValue } from 'redux/filterSlice';
 import { SearchInput, SearchInputContainer } from './FilterStyled';
-export const SearchContainer = ({ handleSearch }) => {
+export const SearchContainer = () => {
+  const dispatch = useDispatch();
+  const handleSearch = e => {
+    dispatch(setFilterValue(e.currentTarget.value));
+  };
   const filter = useSelector(getFilterValue);
   return (
     <SearchInputContainer>
@@ -13,8 +17,4 @@ export const SearchContainer = ({ handleSearch }) => {
       ></SearchInput>
     </SearchInputContainer>
   );
-};
-
-SearchContainer.propTypes = {
-  handleSearch: PropTypes.func.isRequired,
 };

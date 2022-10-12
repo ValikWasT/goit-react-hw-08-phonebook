@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterValue } from 'redux/filterSlice';
 import { getFilterValue, getContacts } from 'redux/selectors';
 import { Box } from 'components/Box/Box';
 import { FormContainer } from 'components/Form/Form';
@@ -12,10 +11,6 @@ export const PhoneBook = () => {
   const dispatch = useDispatch();
   const filter = useSelector(getFilterValue);
   const contacts = useSelector(getContacts);
-
-  const handleSearch = e => {
-    dispatch(setFilterValue(e.currentTarget.value));
-  };
 
   const onFilterArray = array => {
     return array.filter(contact => {
@@ -43,7 +38,7 @@ export const PhoneBook = () => {
       <Box>
         <ContactTitle>Contacts</ContactTitle>
         <SearchTitle>Find contacts by name</SearchTitle>
-        <SearchContainer handleSearch={handleSearch} />
+        <SearchContainer />
         <ContactListContainer
           arrayOfContacts={createArrayOfContacts()}
           handleClickDeleteBtn={handleClickDeleteBtn}
