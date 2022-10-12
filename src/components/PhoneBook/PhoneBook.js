@@ -2,13 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterValue } from 'redux/filterSlice';
 import { getFilterValue, getContacts } from 'redux/selectors';
-import { nanoid } from 'nanoid';
 import { Box } from 'components/Box/Box';
 import { FormContainer } from 'components/Form/Form';
 import { SearchContainer } from 'components/Filter/Filter';
 import { ContactListContainer } from 'components/ContactList/ContactList';
 import { FormTitle, ContactTitle, SearchTitle } from './PhoneBooksStyled';
-import { addNewContact, removeContact } from 'redux/contactsSlice';
+import { removeContact } from 'redux/contactsSlice';
 export const PhoneBook = () => {
   const dispatch = useDispatch();
   const filter = useSelector(getFilterValue);
@@ -30,16 +29,6 @@ export const PhoneBook = () => {
     dispatch(removeContact(e.target.id));
   };
 
-  const addNewContacts = (contactName, contactNumber) => {
-    dispatch(
-      addNewContact({
-        name: contactName,
-        id: nanoid(),
-        number: contactNumber,
-      })
-    );
-  };
-
   const createArrayOfContacts = () => {
     if (filter !== '') {
       return onFilterArray(contacts).map(contact => contact);
@@ -50,7 +39,7 @@ export const PhoneBook = () => {
   return (
     <Box>
       <FormTitle>Phonebook</FormTitle>
-      <FormContainer addNewContact={addNewContacts} />
+      <FormContainer />
       <Box>
         <ContactTitle>Contacts</ContactTitle>
         <SearchTitle>Find contacts by name</SearchTitle>
