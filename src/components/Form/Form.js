@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
 import { getContacts } from 'redux/selectors';
 import { Form, FormBookLabel, FormBookInput, SubmitBtn } from './FormStyled';
 import { useSelector, useDispatch } from 'react-redux';
-import { addNewContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 export const FormContainer = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -39,10 +38,9 @@ export const FormContainer = () => {
 
   const createNewContact = (contactName, contactNumber) => {
     dispatch(
-      addNewContact({
+      addContact({
         name: contactName,
-        id: nanoid(),
-        number: contactNumber,
+        phone: contactNumber,
       })
     );
   };
