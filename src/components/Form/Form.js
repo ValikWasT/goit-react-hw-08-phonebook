@@ -3,7 +3,12 @@ import { getContacts } from 'redux/selectors';
 import { Form, FormBookLabel, FormBookInput, SubmitBtn } from './FormStyled';
 import { useSelector, useDispatch } from 'react-redux';
 import { addContact } from 'redux/operations';
+import Notiflix from 'notiflix';
+import { RotatingLines } from 'react-loader-spinner';
+import { getIsLoading } from 'redux/selectors';
+
 export const FormContainer = () => {
+  const isLoading = useSelector(getIsLoading);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const contacts = useSelector(getContacts);
@@ -31,6 +36,7 @@ export const FormContainer = () => {
       alert(`${name} is already in contacts.`);
       return;
     }
+    Notiflix.Notify.info('Contact adding...');
     createNewContact(name, number);
     setName('');
     setNumber('');
@@ -71,7 +77,13 @@ export const FormContainer = () => {
           required
         />
       </FormBookLabel>
-      <SubmitBtn type="submit">Add contact</SubmitBtn>
+      <SubmitBtn type="submit" disabled={isLoading}>
+        {isLoading ? (
+          <RotatingLines strokeColor="yellow" width="25" height="25" />
+        ) : (
+          'Add contact'
+        )}
+      </SubmitBtn>
     </Form>
   );
 };

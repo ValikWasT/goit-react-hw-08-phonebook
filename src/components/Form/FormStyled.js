@@ -27,3 +27,8 @@ export const SubmitBtn = styled.button`
     color: blue;
   }
 `;
+export const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+`;
