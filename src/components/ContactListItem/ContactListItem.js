@@ -20,7 +20,7 @@ export const ContactListItem = ({ contact }) => {
   return (
     <ContactItem>
       <ContactText>
-        {contact.name}: {contact.phone}
+        {contact.name}: {contact.number}
       </ContactText>
       <RemoveBtn
         id={contact.id}
@@ -41,7 +41,7 @@ export const ContactListItem = ({ contact }) => {
 ContactListItem.propTypes = {
   contact: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }).isRequired,
 };

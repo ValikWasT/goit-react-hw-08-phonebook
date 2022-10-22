@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { RegForm, RegInput, RegLabel, RegButton } from './RegStyled';
+import { register } from 'redux/auth/authOperations';
 
 export const Reg = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
       case 'name':
@@ -19,9 +21,14 @@ export const Reg = () => {
         return;
     }
   };
+
   const handleSubmite = e => {
     e.preventDefault();
+    dispatch(register({ name, email, password }));
+    setEmail('');
+    setPassword('');
   };
+
   return (
     <RegForm onSubmit={handleSubmite}>
       <RegLabel>

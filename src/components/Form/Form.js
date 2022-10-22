@@ -46,7 +46,7 @@ export const FormContainer = () => {
     dispatch(
       addContact({
         name: contactName,
-        phone: contactNumber,
+        number: contactNumber,
       })
     );
   };
