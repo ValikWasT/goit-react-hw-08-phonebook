@@ -1,3 +1,4 @@
+import { HomeContainer } from 'components/Home/Home';
 export const Home = () => {
-  return <div>Welcome Phone book!!!</div>;
+  return <HomeContainer />;
 };

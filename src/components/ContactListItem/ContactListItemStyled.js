@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-export const ContactItem = styled.li``;
+export const ContactItem = styled.li`
+  text-align: center;
+  width: 150px;
+`;
 export const ContactText = styled.p``;
 export const RemoveBtn = styled.button`
   cursor: pointer;

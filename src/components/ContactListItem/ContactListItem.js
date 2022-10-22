@@ -19,9 +19,8 @@ export const ContactListItem = ({ contact }) => {
 
   return (
     <ContactItem>
-      <ContactText>
-        {contact.name}: {contact.number}
-      </ContactText>
+      <ContactText>{contact.name}</ContactText>
+      <ContactText>{contact.number}</ContactText>
       <RemoveBtn
         id={contact.id}
         type="button"
