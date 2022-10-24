@@ -22,8 +22,6 @@ export const Login = () => {
   const handleSubmite = e => {
     e.preventDefault();
     dispatch(logIn({ email, password }));
-    setEmail('');
-    setPassword('');
   };
   return (
     <LoginForm onSubmit={handleSubmite}>

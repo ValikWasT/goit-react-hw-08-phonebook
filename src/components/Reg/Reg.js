@@ -25,8 +25,6 @@ export const Reg = () => {
   const handleSubmite = e => {
     e.preventDefault();
     dispatch(register({ name, email, password }));
-    setEmail('');
-    setPassword('');
   };
 
   return (

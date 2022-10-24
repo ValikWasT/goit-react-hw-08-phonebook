@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
+import { NotFoundBox, NotFoundTitle, NotFoundLink } from './NotFoundStyled';
 
 const NotFound = () => {
   return (
-    <>
-      <h1>Not Found, 404</h1>
-      <Link to="/">Go home page</Link>
-    </>
+    <NotFoundBox>
+      <NotFoundTitle>Not Found, 404</NotFoundTitle>
+      <NotFoundLink to="/">Go home page</NotFoundLink>
+    </NotFoundBox>
   );
 };
 export default NotFound;
